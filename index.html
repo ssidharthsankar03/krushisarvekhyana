@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrushiSarvekhyana - Agricultural Surveys</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <title>@lottiefiles/dotlottie-web | basic example</title>
+</head>
+<style>
+    #weather {
+        font-size: 14px;
+        font-weight: 500;
+        align-items: center;
+    }
+
+    #weather-icon img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        background-color: #333;
+        padding: 10px;
+        color: white;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .navbar li {
+        display: inline;
+    }
+
+    .navbar li a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+    }
+
+    /* Basic styling for navbar */
+    .nav-container {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+    }
+
+    /* Styling for weather info in navbar */
+    #weather {
+        cursor: pointer;
+        font-size: 18px;
+        color: white;
+    }
+
+    /* Weather modal positioned below the navbar */
+    /* Weather Modal Styles */
+.weather-modal {
+   
+    position: fixed;
+    top: 32%;
+    right: 0; /* Position to the right */
+    transform: translateY(-50%); /* Adjust to center vertically */
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 300px; /* Set a width for the modal */
+    border-left: 2px solid #ddd;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.weather-modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: slideInUp 0.5s ease-out;
+}
+
+.weather-modal h3 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.weather-data p {
+    margin: 0.5rem 0;
+}
+
+.weather-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .weather-modal-content {
+        width: 80%;
+    }
+}
+
+</style>
+
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-bold flex items-center">
+                    KRUSHISARVEKHYANA
+                </div>
+
+                <!-- Hamburger menu for mobile -->
+                <div class="hamburger-menu md:hidden">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+                <!-- Navbar links -->
+                <div class="nav-links hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+
+                    <!-- Weather Section -->
+                    <div id="weather" class="text-gray-700 flex items-center space-x-2 cursor-pointer">
+                        <span id="weather-icon" class="text-xl"></span>
+                        <span id="weather-temp"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Weather Info in Navbar -->
+
+
+    <!-- Modal for displaying weather data -->
+<div id="weather-modal" class="weather-modal hidden">
+    <div class="weather-modal-content">
+        <span id="close-weather-modal" class="close-btn">&times;</span>
+        <h3>Weather Data</h3>
+        <div class="weather-data">
+            <p><strong>Temperature⛅:</strong> <span id="temp-data"></span></p>
+            <p><strong>Humidity💧:</strong> <span id="humidity-data"></span></p>
+            <p><strong>Wind Speed💨:</strong> <span id="wind-speed-data"></span></p>
+            <p><strong>Pressure🍃:</strong> <span id="pressure-data"></span></p>
+        </div>
+    </div>
+</div>
+
+    </nav>
+
+    <!-- hero section -->
+    <div id="home" class="hero-pattern">
+        <div class="container mx-auto px-6 py-16">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <!-- Left Content -->
+                <div class="w-full md:w-1/2 pr-0 md:pr-12 mb-8 md:mb-0">
+                    <h1 class="hero-title text-left">
+                        Shaping the Future of<br />
+                        Agri-Business in Odisha
+                    </h1>
+                    <p class="text-gray-700 text-lg leading-relaxed mb-8 text-left">
+                        Welcome to KrushiSarvekhyana, your trusted platform for gathering valuable insights to shape the
+                        future of agriculture in Odisha. We are dedicated to conducting surveys and analyzing key
+                        parameters to better understand the needs and challenges faced by Dealers, Retailers, and
+                        Farmers. Your feedback plays a vital role in driving data-driven solutions and fostering growth
+                        in the agricultural community.
+                    </p>
+                    <a href="#surveys" class="primary-button inline-block">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Right Image -->
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <!-- <div class="hero-image-container">
+                        <img src="images/in-rice-field-2679153_1920.jpg" alt="Agricultural Image" class="hero-image">
+                    </div> -->
+                    <canvas id="canvas" width="300" height="300"></canvas>
+                    <script type="module">
+                        import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
+
+                        new DotLottie({
+                            autoplay: true,
+                            loop: true,
+                            canvas: document.getElementById("canvas"),
+                            src: "https://lottie.host/a863e828-f814-4ef2-af41-0bb72fa3b2c3/w9UYT6u62q.json", // or .json file
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Survey Cards Section -->
+    <div id="surveys" class="container mx-auto px-6 py-24">
+        <h2 class="text-4xl font-bold text-green-900 mb-16 text-center scroll-animate">Our Surveys</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+           <!-- Crop Survey -->
+<div class="survey-card scroll-animate" style="animation-delay: 0.2s">
+    <div class="relative overflow-hidden rounded-lg mb-6">
+        <img src="images/survey1.jpeg" alt="Crops">
+    </div>
+    <h3 class="text-2xl font-semibold text-green-800 mb-4">Farmer/କୃଷକ</h3>
+    <p class="text-gray-600 mb-6">As a farmer, your feedback is crucial in shaping the future of agriculture. By sharing your experiences and insights, you help improve farming practices, enhance productivity, and contribute to a more sustainable future. Your voice matters, and we value your input to create better opportunities for farmers like you!
+     <br>କୃଷକ ଭାବରେ, ଆପଣଙ୍କର ମତାମତ ଚାଷ ବ୍ୟବହାର ଓ ଉତ୍ପାଦନ ପ୍ରକ୍ରିୟାକୁ ସୁଧାରିବାରେ ବହୁତ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। ଆପଣଙ୍କର ଅନୁଭବ ଓ ତଥ୍ୟ ସାଧାରଣ କରି, ଆମେ କୃଷି ପ୍ରବୃତ୍ତିଗୁଡିକୁ ଉନ୍ନତ କରିବା, ପ୍ରସାରଣ ସୁବିଧା ପ୍ରଦାନ କରିବା, ଓ ଅଧିକ ସସ୍ଥାୟୀ ଭବିଷ୍ୟତ ପାଇଁ କାମ କରିପାରିବା। ଆପଣଙ୍କର ମତାମତ ଅତି ଆବଶ୍ୟକ, ଓ ଆମେ ଆପଣଙ୍କର ସହଯୋଗକୁ ଉପକୃତ।
+    </p>
+    <a href="surveys/survey1.html" class="survey-button">Start Survey/ସର୍ବେକ୍ଷଣ ଆରମ୍ଭ କରନ୍ତୁ</a>
+</div>
+
+<!-- Soil Survey -->
+<div class="survey-card scroll-animate" style="animation-delay: 0.4s">
+    <div class="relative overflow-hidden rounded-lg mb-6">
+        <img src="images/survey2.jpeg" alt="Soil">
+    </div>
+    <h3 class="text-2xl font-semibold text-green-800 mb-4">Retailer/ବିକ୍ରେତା</h3>
+    <p class="text-gray-600 mb-6">As a retailer, your feedback plays a significant role in enhancing the retail experience. By sharing your thoughts and insights, you help improve the products, customer service, and overall retail environment. Your input will help create better opportunities and products for retailers like you!
+     <br>ବିକ୍ରେତା ଭାବରେ, ଆପଣଙ୍କର ମତାମତ ଖାଦ୍ୟ ସାମଗ୍ରୀ, ଗ୍ରାହକ ସେବା, ଓ ସାଧାରଣ ବିକ୍ରୟ ପରିବେଶକୁ ସୁଧାରିବାରେ ବହୁତ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। ଆପଣଙ୍କର ଅନୁଭବ ଓ ତଥ୍ୟ ସାଧାରଣ କରି, ଆମେ ବିକ୍ରୟ ପ୍ରସାରଣକୁ ସୁବିଧାଜନକ ଏବଂ ଉତ୍ତମ ଉତ୍ପାଦ ଉପସ୍ଥାପନ କରିବା।
+    </p>
+    <a href="surveys/survey2.html" class="survey-button">Start Survey/ସର୍ବେକ୍ଷଣ ଆରମ୍ଭ କରନ୍ତୁ</a>
+</div>
+
+<!-- Equipment Survey -->
+<div class="survey-card scroll-animate" style="animation-delay: 0.6s">
+    <div class="relative overflow-hidden rounded-lg mb-6">
+        <img src="images/survey3.jpeg" alt="Equipment">
+    </div>
+    <h3 class="text-2xl font-semibold text-green-800 mb-4">Dealer/ବ୍ୟାପାରୀ</h3>
+    <p class="text-gray-600 mb-6">As a dealer, your feedback helps in improving the supply chain and availability of agricultural equipment. By sharing your experiences and suggestions, you can help optimize the product offerings and services for dealers like you. Your voice can make a significant impact!
+     <br>ବ୍ୟାପାରୀ ଭାବରେ, ଆପଣଙ୍କର ମତାମତ କୃଷି ସାମଗ୍ରୀ ପ୍ରଦାନ ବ୍ୟବସ୍ଥା ଓ ସୁବିଧା ସୂଚନାକୁ ସୁଧାରିବାରେ ସାହାଯ୍ୟ କରିବା। ଆପଣଙ୍କର ଅନୁଭବ ଓ ସୁପାରିସ୍ ଆମେ ପ୍ରଦାନ ସାମଗ୍ରୀ ଓ ସେବାଗୁଡିକୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରିପାରିବା। ଆପଣଙ୍କର ମତାମତ ସଂସ୍କୃତ ନୂତନ ସୂଚନା ଦେଇ ପ୍ରଭାବ ପକାଇପାରିବା।
+    </p>
+    <a href="surveys/survey3.html" class="survey-button">Start Survey/ସର୍ବେକ୍ଷଣ ଆରମ୍ଭ କରନ୍ତୁ</a>
+</div>
+
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about" class="about-section py-24">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-green-900 mb-16 text-center scroll-animate">About Us</h2>
+                <div class="about-content grid md:grid-cols-2 gap-12">
+                    <div class="scroll-animate">
+                        <h3 class="text-2xl font-semibold text-green-800 mb-4">Our Mission</h3>
+                        <p class="text-gray-700 mb-6">KrushiSarvekhyana is dedicated to understanding and improving
+                            agricultural practices across regions. Our surveys help collect valuable data that aids in
+                            developing better farming solutions.</p>
+                    </div>
+                    <div class="scroll-animate" style="animation-delay: 0.3s">
+                        <h3 class="text-2xl font-semibold text-green-800 mb-4">Your Impact</h3>
+                        <p class="text-gray-700 mb-6">By participating in our surveys, you contribute to a growing
+                            database of agricultural knowledge that helps researchers and policymakers make informed
+                            decisions about farming practices and support systems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-green-900 mb-16 text-center scroll-animate">Contact Us</h2>
+            <div class="form-container">
+                <form class="space-y-8">
+                    <div class="form-group scroll-animate">
+                        <label class="form-label block text-gray-700 mb-2" for="name">Name</label>
+                        <input type="text" id="name" class="form-input" placeholder="Your name">
+                    </div>
+                    <div class="form-group scroll-animate" style="animation-delay: 0.2s">
+                        <label class="form-label block text-gray-700 mb-2" for="email">Email</label>
+                        <input type="email" id="email" class="form-input" placeholder="Your email">
+                    </div>
+                    <div class="form-group scroll-animate" style="animation-delay: 0.4s">
+                        <label class="form-label block text-gray-700 mb-2" for="message">Message</label>
+                        <textarea id="message" rows="4" class="form-input" placeholder="Your message"></textarea>
+                    </div>
+                    <div class="scroll-animate" style="animation-delay: 0.6s">
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <img src="/api/placeholder/60/60" alt="Footer Logo" class="mx-auto mb-6 rounded-full">
+                <p class="mb-4">&copy; 2025 KrushiSarvekhyana. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>

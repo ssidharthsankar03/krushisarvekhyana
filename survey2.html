@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrushiSarvekhyana - Agricultural Survey</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- <link href="css/styles.css" rel="stylesheet"> -->
+    <style>
+        .nav-container {
+            /* background-color: rgba(22, 101, 52, 0.95); */
+            background-color: transparent;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container.scrolled {
+            padding: 0.5rem 0;
+            background-color: transparent;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            /* color: #ffffff; */
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #4ade80;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .survey-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .question-container:hover {
+            box-shadow: 0 4px 6px rgba(22, 163, 74, 0.1);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .submit-button {
+            background: linear-gradient(45deg, #16a34a, #15803d);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-bold flex items-center">
+                    <!-- <img src="/api/placeholder/40/40" alt="Logo" class="mr-2 rounded-full"> -->
+                    KRUSHISARVEKHYANA
+                </div>
+                <div class="nav-links hidden md:flex space-x-8">
+                    <a href="../index.html#home" class="nav-link">Home</a>
+                    <a href="../index.html#about" class="nav-link">About</a>
+                    <a href="../index.html#contact" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Survey Form -->
+    <div class="container mx-auto px-4 pt-24">
+        <div class="survey-container">
+            <h1 class="text-3xl font-bold text-green-900 mb-8">Agricultural Survey</h1>
+            <form id="surveyForm">
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        Choose your district:
+                        <select name="district" class="form-input" required>
+                            <option value="">Select your district</option>
+                            <option value="Angul">Angul</option>
+                            <option value="Balangir">Balangir</option>
+                            <option value="Balasore">Balasore</option>
+                            <option value="Bargarh">Bargarh</option>
+                            <option value="Bhadrak">Bhadrak</option>
+                            <option value="Boudh">Boudh</option>
+                            <option value="Cuttack">Cuttack</option>
+                            <option value="Deogarh">Deogarh</option>
+                            <option value="Dhenkanal">Dhenkanal</option>
+                            <option value="Gajapati">Gajapati</option>
+                            <option value="Ganjam">Ganjam</option>
+                            <option value="Jagatsinghpur">Jagatsinghpur</option>
+                            <option value="Jajpur">Jajpur</option>
+                            <option value="Jharsuguda">Jharsuguda</option>
+                            <option value="Kalahandi">Kalahandi</option>
+                            <option value="Kandhamal">Kandhamal</option>
+                            <option value="Kendrapara">Kendrapara</option>
+                            <option value="Kendujhar">Kendujhar</option>
+                            <option value="Khordha">Khordha</option>
+                            <option value="Koraput">Koraput</option>
+                            <option value="Malkangiri">Malkangiri</option>
+                            <option value="Mayurbhanj">Mayurbhanj</option>
+                            <option value="Nabarangpur">Nabarangpur</option>
+                            <option value="Nayagarh">Nayagarh</option>
+                            <option value="Nuapada">Nuapada</option>
+                            <option value="Puri">Puri</option>
+                            <option value="Rayagada">Rayagada</option>
+                            <option value="Sambalpur">Sambalpur</option>
+                            <option value="Subarnapur">Subarnapur</option>
+                            <option value="Sundargarh">Sundargarh</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Question 2: Type of retail business -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        What type of retail business do you run?
+                        <select name="retailType" class="form-input" required>
+                            <option value="">Select an option</option>
+                            <option value="agriProducts">Agricultural Products</option>
+                            <option value="seedsFertilizers">Seeds and Fertilizers</option>
+                            <option value="pesticides">Pesticides</option>
+                            <option value="agriTools">Agricultural Tools</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Question 3: Retailer size -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        How large is your retail business?
+                        <select name="retailSize" class="form-input" required>
+                            <option value="">Select an option</option>
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Question 4: Products sold -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        What types of products do you primarily sell? (Select all that apply)
+                        <div class="space-y-2 mt-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="productsSold" value="seeds" class="mr-2">
+                                Seeds
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="productsSold" value="fertilizers" class="mr-2">
+                                Fertilizers
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="productsSold" value="pesticides" class="mr-2">
+                                Pesticides
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="productsSold" value="tools" class="mr-2">
+                                Agricultural Tools
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="productsSold" value="other" class="mr-2">
+                                Other
+                            </label>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Question 5: Supplier reliability -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        How reliable are your suppliers in terms of product availability?
+                        <select name="supplierReliability" class="form-input" required>
+                            <option value="">Select an option</option>
+                            <option value="veryReliable">Very Reliable</option>
+                            <option value="reliable">Reliable</option>
+                            <option value="somewhatReliable">Somewhat Reliable</option>
+                            <option value="unreliable">Unreliable</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Question 6: Product pricing -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        How would you rate the pricing of the products you sell?
+                        <select name="productPricing" class="form-input" required>
+                            <option value="">Select an option</option>
+                            <option value="veryAffordable">Very Affordable</option>
+                            <option value="affordable">Affordable</option>
+                            <option value="expensive">Expensive</option>
+                            <option value="veryExpensive">Very Expensive</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Question 7: Customer demand -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        How would you describe the demand for agricultural products in your area?
+                        <select name="customerDemand" class="form-input" required>
+                            <option value="">Select an option</option>
+                            <option value="highDemand">High Demand</option>
+                            <option value="mediumDemand">Medium Demand</option>
+                            <option value="lowDemand">Low Demand</option>
+                            <option value="noDemand">No Demand</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Question 8: Access to government support -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        Are you aware of any government support programs for retailers?
+                        <select name="govtSupport" class="form-input" required>
+                            <option value="">Select an option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Question 9: Challenges faced -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        What are the main challenges you face in running your retail business? (Select all that apply)
+                        <div class="space-y-2 mt-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="challenges" value="highCosts" class="mr-2">
+                                High Product Costs
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="challenges" value="marketCompetition" class="mr-2">
+                                Market Competition
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="challenges" value="logisticsIssues" class="mr-2">
+                                Logistics and Delivery Issues
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="challenges" value="paymentDelays" class="mr-2">
+                                Payment Delays
+                            </label>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Question 10: Access to technology -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        Do you have access to modern technology (like POS systems, e-commerce, etc.) to manage your
+                        retail business?
+                        <select name="techAccess" class="form-input" required>
+                            <option value="">Select an option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Question 11: Training needs -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        Would you be interested in training programs to improve your retail skills (e.g., inventory
+                        management, customer service)?
+                        <select name="trainingInterest" class="form-input" required>
+                            <option value="">Select an option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </label>
+                </div>
+
+
+
+
+
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="submit-button">Submit Survey</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Integration -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Initialize Firebase (you'll need to add your config)
+        // const firebaseConfig = {
+        //     // Your Firebase config here
+        // };
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBtPwAwUPqHOyqfIxD9zNslj53QA_nNtBI",
+            authDomain: "krushisarvekhyana.firebaseapp.com",
+            projectId: "krushisarvekhyana",
+            storageBucket: "krushisarvekhyana.firebasestorage.app",
+            messagingSenderId: "542014982428",
+            appId: "1:542014982428:web:eb41b16ef2843cab6052d9",
+            measurementId: "G-YDN285DHD0"
+        };
+
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Form submission handler
+        document.getElementById('surveyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(e.target);
+            const data = {
+                timestamp: new Date(),
+                farmSize: formData.get('farmSize'),
+                district: formData.get('district'),
+                retailType: formData.get('retailType'),
+                retailSize: formData.get('retailSize'),
+                productsSold: formData.get('productsSold'),
+                supplierReliability: formData.get('supplierReliability'),
+                productPricing: formData.get('productPricing'),
+                customerDemand: formData.get('customerDemand'),
+                govtSupport: formData.get('govtSupport'),
+                challenges: formData.get('challenges'),
+                techAccess: formData.get('techAccess'),
+                trainingInterest: formData.get('trainingInterest')
+
+
+            };
+
+            try {
+                // Save to Firebase
+                await db.collection('survey2').add(data);
+                alert('Survey submitted successfully!');
+                e.target.reset();
+            } catch (error) {
+                console.error('Error submitting survey:', error);
+                alert('Error submitting survey. Please try again.');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrushiSarvekhyana - Agricultural Survey</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- <link href="css/styles.css" rel="stylesheet"> -->
+    <style>
+        .nav-container {
+            /* background-color: rgba(22, 101, 52, 0.95); */
+            background-color: transparent;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container.scrolled {
+            padding: 0.5rem 0;
+            background-color: transparent;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            /* color: #ffffff; */
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #4ade80;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .survey-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .question-container:hover {
+            box-shadow: 0 4px 6px rgba(22, 163, 74, 0.1);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .submit-button {
+            background: linear-gradient(45deg, #16a34a, #15803d);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-english {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn-odia {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+
+
+
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-bold flex items-center">
+                    <!-- <img src="/api/placeholder/40/40" alt="Logo" class="mr-2 rounded-full"> -->
+                    KRUSHISARVEKHYANA
+                </div>
+                <div class="nav-links hidden md:flex space-x-8">
+                    <a href="../index.html#home" class="nav-link">Home</a>
+                    <a href="../index.html#about" class="nav-link">About</a>
+                    <a href="../index.html#contact" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Survey Form -->
+    <div class="container mx-auto px-4 pt-24">
+        <div class="survey-container">
+            <h1 class="text-3xl font-bold text-green-900 mb-8">Agricultural Survey</h1>
+            <form id="surveyForm">
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        Choose your district:
+                        ଆପଣଙ୍କ ଜିଲ୍ଲା ଚୟନ କରନ୍ତୁ:
+                        <select name="district" class="form-input" required>
+                            <option value="">Select your district ଆପଣଙ୍କ ଜିଲ୍ଲା ଚୟନ କରନ୍ତୁ</option>
+                            <option value="Angul">Angul</option>
+                            <option value="Balangir">Balangir</option>
+                            <option value="Balasore">Balasore</option>
+                            <option value="Bargarh">Bargarh</option>
+                            <option value="Bhadrak">Bhadrak</option>
+                            <option value="Boudh">Boudh</option>
+                            <option value="Cuttack">Cuttack</option>
+                            <option value="Deogarh">Deogarh</option>
+                            <option value="Dhenkanal">Dhenkanal</option>
+                            <option value="Gajapati">Gajapati</option>
+                            <option value="Ganjam">Ganjam</option>
+                            <option value="Jagatsinghpur">Jagatsinghpur</option>
+                            <option value="Jajpur">Jajpur</option>
+                            <option value="Jharsuguda">Jharsuguda</option>
+                            <option value="Kalahandi">Kalahandi</option>
+                            <option value="Kandhamal">Kandhamal</option>
+                            <option value="Kendrapara">Kendrapara</option>
+                            <option value="Kendujhar">Kendujhar</option>
+                            <option value="Khordha">Khordha</option>
+                            <option value="Koraput">Koraput</option>
+                            <option value="Malkangiri">Malkangiri</option>
+                            <option value="Mayurbhanj">Mayurbhanj</option>
+                            <option value="Nabarangpur">Nabarangpur</option>
+                            <option value="Nayagarh">Nayagarh</option>
+                            <option value="Nuapada">Nuapada</option>
+                            <option value="Puri">Puri</option>
+                            <option value="Rayagada">Rayagada</option>
+                            <option value="Sambalpur">Sambalpur</option>
+                            <option value="Subarnapur">Subarnapur</option>
+                            <option value="Sundargarh">Sundargarh</option>
+                        </select>
+                    </label>
+                </div>
+                <!-- Question 2: Farmland size -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        What is the size of your farmland (in acres)?
+                        <p class="text-odia text-gray-600">ଆପଣଙ୍କର ଖେତର ଆକାର କେତେ (ଏକର ରେ)?</p> <!-- Odia translation below -->
+                        <input type="number" name="farmlandSize" class="form-input" required>
+                    </label>
+                </div>
+                
+
+                <!-- Question 3: Crops cultivated -->
+                <div class="question-container">
+                    <label class="block font-semibold text-gray-700">
+                        What type of crops do you cultivate?
+                        <p class="text-odia text-gray-600">ଆପଣ କେଉଁ ପ୍ରକାରଫସଲ ଚାଷ କରନ୍ତି?</p> <!-- Odia translation below -->
+                
+                        <select name="cropsCultivated" class="form-input" required>
+                            <option value="">Select a crop/ଏକ ଫସଲ ଚୟନ କରନ୍ତୁ</option>
+                            <option value="rice">Rice ଚାଉଳ</option>
+                            <option value="wheat">Wheat ଗହମ</option>
+                            <option value="pulses">Pulses ରାଗି</option>
+                            <option value="vegetables">Vegetables ସବଜି</option>
+                            <option value="fruits">Fruits ଫଳ</option>
+                            <option value="other">Other ଅନ୍ୟ</option>
+                        </select>
+                    </label>
+                </div>
+                
+
+       <!-- Question 4: Irrigation method -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        What is your primary irrigation method?
+        <p class="text-odia text-gray-600">ଆପଣଙ୍କର ପ୍ରମୁଖ ସର୍ବୋତ୍ତମ ପାଣି ଦେବା ପଦ୍ଧତି କେଉଁଟି?</p> <!-- Odia translation below -->
+
+        <select name="irrigationMethod" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="drip">Drip Irrigation/ଡ୍ରିପ୍ ଇରିଗେସନ୍</option>
+            <option value="sprinkler">Sprinkler System/ସ୍ପ୍ରିଙ୍କଲର୍ ସିଷ୍ଟମ୍</option>
+            <option value="flood">Flood Irrigation/ବାନ୍ଦ ଇରିଗେସନ୍</option>
+            <option value="rainfed">Rainfed Agriculture/ବର୍ଷା ପାଇଁ ଚାଷ</option>
+        </select>
+    </label>
+</div>
+
+<!-- Question 5: Farming type -->
+<div class="question-container">
+    <p class="font-semibold text-gray-700 mb-4">What type of farming do you primarily practice?</p>
+    <p class="text-odia text-gray-600 mb-4">ଆପଣ କେଉଁ ପ୍ରକାର ଚାଷ କରିଥିବେ?</p> <!-- Odia translation below -->
+    <div class="space-y-2">
+        <label class="flex items-center">
+            <input type="radio" name="farmingType" value="organic" class="mr-2" required>
+            Organic Farming/ଜୈବିକ ଚାଷ
+        </label>
+        <label class="flex items-center">
+            <input type="radio" name="farmingType" value="conventional" class="mr-2">
+            Conventional Farming/ପ୍ରାଥମିକ ଚାଷ
+        </label>
+        <label class="flex items-center">
+            <input type="radio" name="farmingType" value="mixed" class="mr-2">
+            Mixed Farming/ମିଶ୍ର ଚାଷ
+        </label>
+    </div>
+</div>
+
+<!-- Question 6: Fertilizers used -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        Which type of fertilizers do you primarily use?
+        <p class="text-odia text-gray-600">ଆପଣ କେଉଁ ପ୍ରକାର ଖତିର ପ୍ରୟୋଗ କରନ୍ତି?</p> <!-- Odia translation below -->
+
+        <select name="fertilizersUsed" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="chemical">Chemical Fertilizers/ରାସାୟନିକ ଖତ</option>
+            <option value="organic">Organic Fertilizers/ଜୈବିକ ଖତ</option>
+            <option value="both">Both/ଦୁଇଟି</option>
+        </select>
+    </label>
+</div>
+
+<!-- Question 7: Pesticides used -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        Do you use pesticides on your crops?
+        <p class="text-odia text-gray-600">ଆପଣ ତାଲକି ଦେଖିଛନ୍ତି କି ଫସଲଗୁଡିକର ଉପରେ କୀଟନାଶକ ପ୍ରୟୋଗ କରନ୍ତି?</p> <!-- Odia translation below -->
+
+        <select name="pesticidesUsed" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="yes">Yes/ହଁ</option>
+            <option value="no">No/ନା</option>
+        </select>
+    </label>
+</div>
+
+<!-- Question 8: Challenges faced -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        What are the main challenges you face in farming? (Select all that apply)
+        <p class="text-odia text-gray-600">ଏହି ଚାଷରେ ସାମ୍ନା କରୁଥିବା ମୁଖ୍ୟ ଚ୍ୟାଲେଞ୍ଜଗୁଡିକ କେଉଁ? (ସମ୍ବଲିତ କରନ୍ତୁ)</p> <!-- Odia translation below -->
+
+        <div class="space-y-2 mt-2">
+            <label class="flex items-center">
+                <input type="checkbox" name="challenges" value="climateChange" class="mr-2">
+                Climate Change/ପାରିବେଶିକ ପରିବର୍ତ୍ତନ
+            </label>
+            <label class="flex items-center">
+                <input type="checkbox" name="challenges" value="pests" class="mr-2">
+                Pests and Diseases/କୀଟ ପ୍ରଣାଳୀ ଓ ରୋଗ
+            </label>
+            <label class="flex items-center">
+                <input type="checkbox" name="challenges" value="irrigationIssues" class="mr-2">
+                Irrigation Issues/ପାଣି ଦେବା ସମସ୍ୟା
+            </label>
+            <label class="flex items-center">
+                <input type="checkbox" name="challenges" value="highCosts" class="mr-2">
+                High Input Costs/ଉଚ୍ଚ ମୂଲ୍ୟ
+            </label>
+            <label class="flex items-center">
+                <input type="checkbox" name="challenges" value="lowPrices" class="mr-2">
+                Low Market Prices/ନିମ୍ନ ବଜାର ଦାମ
+            </label>
+        </div>
+    </label>
+</div>
+
+<!-- Question 9: Access to markets -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        How do you primarily sell your produce?
+        <p class="text-odia text-gray-600">ଆପଣ ଆପଣଙ୍କର ଉତ୍ପାଦ କେମିତି ବିକ୍ରୟ କରନ୍ତି?</p> <!-- Odia translation below -->
+
+        <select name="marketAccess" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="localMarket">Local Market/ସ୍ଥାନୀୟ ବଜାର</option>
+            <option value="mandi">Mandi/Wholesale Market/ମଣ୍ଡୀ/ସାଧାରଣ ବଜାର</option>
+            <option value="directConsumers">Directly to Consumers/ସାଧାରଣ ଗ୍ରାହକଙ୍କୁ</option>
+            <option value="export">Export/ନିର୍ୟାତ</option>
+        </select>
+    </label>
+</div>
+
+<!-- Question 10: Access to government schemes -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        Are you aware of any government schemes for farmers?
+        <p class="text-odia text-gray-600">କୃଷକଙ୍କ ପାଇଁ କୌଣସି ସରକାରୀ ଯୋଜନାର ବିଷୟରେ ଆପଣ ସଚେତନ କି?</p> <!-- Odia translation below -->
+
+        <select name="govtSchemes" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="yes">Yes/ହଁ</option>
+            <option value="no">No/ନା</option>
+        </select>
+    </label>
+</div>
+
+<!-- Question 11: Availability of seeds -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        Do you have easy access to quality seeds for your crops?
+        <p class="text-odia text-gray-600">ଆପଣଙ୍କର ଫସଲ ପାଇଁ ଗୁଣବତ୍ତାପୂର୍ଣ୍ଣ ବୀଜ ପ୍ରାପ୍ତି ଏସଉଁ?</p> <!-- Odia translation below -->
+
+        <select name="seedAvailability" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="yes">Yes/ହଁ</option>
+            <option value="no">No/ନା</option>
+        </select>
+    </label>
+</div>
+
+<!-- Question 12: Access to loans -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        Have you taken any agricultural loans in the last year?
+        <p class="text-odia text-gray-600">ଗତ ବର୍ଷ ରେ କୃଷି ଋଣ ନେଇଛନ୍ତି କି?</p> <!-- Odia translation below -->
+
+        <select name="agriculturalLoans" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="yes">Yes/ହଁ</option>
+            <option value="no">No/ନା</option>
+        </select>
+    </label>
+</div>
+
+<!-- Question 13: Need for training -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        Do you think training programs for modern farming techniques will benefit you?
+        <p class="text-odia text-gray-600">ଆପଣ ଚିନ୍ତା କରିଛନ୍ତି କି ଆଧୁନିକ କୃଷି ପଦ୍ଧତି ପାଇଁ ପ୍ରଶିକ୍ଷଣ କାର୍ଯ୍ୟକ୍ରମ ଆପଣଙ୍କୁ ଲାଭ କରାଏ?</p> <!-- Odia translation below -->
+
+        <select name="trainingNeed" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="yes">Yes/ହଁ</option>
+            <option value="no">No/ନା</option>
+        </select>
+    </label>
+</div>
+
+<!-- Question 14: Access to weather updates -->
+<div class="question-container">
+    <label class="block font-semibold text-gray-700">
+        Do you have access to accurate weather updates for planning your farming activities?
+        <p class="text-odia text-gray-600">ଆପଣଙ୍କର କୃଷି କାର୍ଯ୍ୟକ୍ରମ ପାଇଁ ସଠିକ୍ ଆବହାଉ ସୂଚନା ପ୍ରାପ୍ତ କରନ୍ତି କି?</p> <!-- Odia translation below -->
+
+        <select name="weatherUpdates" class="form-input" required>
+            <option value="">Select an option/ଏକ ବିକଳ୍ପ ଚୟନ କରନ୍ତୁ</option>
+            <option value="yes">Yes/ହଁ</option>
+            <option value="no">No/ନା</option>
+        </select>
+    </label>
+</div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="submit-button">Submit Survey</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Integration -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            const modal = document.getElementById('languageModal');
+            modal.style.display = 'block';
+
+            // Handle English button click
+            document.getElementById('englishBtn').addEventListener('click', () => {
+                modal.style.display = 'none';
+                alert('You selected English.');
+                // Load English content or set a preference here
+            });
+
+            // Handle Odia button click
+            document.getElementById('odiaBtn').addEventListener('click', () => {
+                modal.style.display = 'none';
+                alert('You selected Odia.');
+                // Load Odia content or set a preference here
+            });
+        });
+
+
+
+
+        // Initialize Firebase (you'll need to add your config)
+        // const firebaseConfig = {
+        //     // Your Firebase config here
+        // };
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBtPwAwUPqHOyqfIxD9zNslj53QA_nNtBI",
+            authDomain: "krushisarvekhyana.firebaseapp.com",
+            projectId: "krushisarvekhyana",
+            storageBucket: "krushisarvekhyana.firebasestorage.app",
+            messagingSenderId: "542014982428",
+            appId: "1:542014982428:web:eb41b16ef2843cab6052d9",
+            measurementId: "G-YDN285DHD0"
+        };
+
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Form submission handler
+        document.getElementById('surveyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(e.target);
+            const data = {
+                timestamp: new Date(),
+                district: formData.get('district'),
+                farmlandSize: formData.get('farmlandSize'),
+                cropsCultivated: formData.get('cropsCultivated'),
+                irrigationMethod: formData.get('irrigationMethod'),
+                farmingType: formData.get('farmingType'),
+                fertilizersUsed: formData.get('fertilizersUsed'),
+                pesticidesUsed: formData.get('pesticidesUsed'),
+                challenges: formData.get('challenges'),
+                marketAccess: formData.get('marketAccess'),
+                govtSchemes: formData.get('govtSchemes'),
+                seedAvailability: formData.get('seedAvailability'),
+                agriculturalLoans: formData.get('agriculturalLoans'),
+                trainingNeed: formData.get('trainingNeed'),
+                weatherUpdates: formData.get('weatherUpdates')
+
+
+            };
+
+            try {
+                // Save to Firebase
+                await db.collection('surveys').add(data);
+                alert('Survey submitted successfully!');
+                e.target.reset();
+            } catch (error) {
+                console.error('Error submitting survey:', error);
+                alert('Error submitting survey. Please try again.');
+            }
+        });
+    </script>
+</body>
+
+</html>
